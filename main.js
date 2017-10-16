@@ -52,7 +52,10 @@ angular
             queue: '<',
             onWatchEnd: '&'
         },
-        template: `<div cursor ng-if="vm.isWatching" class="cursor"></div>`,
+        template: `
+        <div cursor ng-show="vm.isWatching" class="cursor"></div>
+        <history-frame url="test.html"></history-frame>
+        `,
         controllerAs: 'vm',
         controller: ['$scope', '$timeout', function($scope, $timeout){
             let vm = this;
@@ -88,6 +91,29 @@ angular
                 return curr;
             }
         }]
+    })
+    .directive('historyFrame', function(){
+        return {
+            bindToController: {
+                url: '@'
+            },
+            restrict: 'E',
+            template: `
+            <iframe src="{{ vm.url }}" width="100%" height="600" frameBorder="2"></iframe>
+            `,
+            controllerAs: 'vm',
+            controller: function(){},
+            link: function ($scope, $element, $attrs, ctrl) {
+                const iframe = $element.find('iframe');
+
+                iframe.on('load', function(){
+                    const document = iframe[0].contentWindow.document;
+                    const body = document.body;
+                    
+                });
+                
+            }
+        }
     })
     .directive('cursor', function(){
         return {
