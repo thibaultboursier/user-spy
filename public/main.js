@@ -54,7 +54,6 @@ angular
         },
         template: `
         <div cursor ng-show="vm.isWatching" class="cursor"></div>
-        <history-frame url="test.html"></history-frame>
         `,
         controllerAs: 'vm',
         controller: ['$scope', '$timeout', function($scope, $timeout){
