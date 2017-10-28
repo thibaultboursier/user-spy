@@ -1,5 +1,19 @@
 'use strict';
 
+const Nes = require('nes');
+const angular = require('angular')
+require('angular-sanitize')
+
+const client = new Nes.Client('ws://localhost:3000');
+console.log('connecting with Nes')
+client.connect(err => {
+    if (err) throw err;
+    console.log('connection OK')
+    client.request('hello', (err, payload) => {
+        console.log('payload', payload)
+    })
+})
+
 angular
     .module('spy', [
         'ngSanitize'

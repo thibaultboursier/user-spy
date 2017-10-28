@@ -10,7 +10,18 @@ exports.register = function (server, options, next) {
             }
         }
     });
-    server.subscription('/timeline/updates');
+
+    server.route({
+        method: 'GET',
+        path: '/hello',
+        config: {
+            id: 'hello',
+            handler: function(request, reply){
+                reply('hiiii !')
+            }
+        }
+    });
+    server.subscription('/foo');
 
     next();
 };
