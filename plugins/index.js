@@ -21,6 +21,18 @@ exports.register = function (server, options, next) {
             }
         }
     });
+
+    server.route({
+        method: 'GET',
+        path: '/mousemove',
+        config: {
+            id: 'mousemove',
+            handler: function(request, reply){
+                console.log(request)
+            }
+        }
+    });
+
     server.subscription('/foo');
 
     next();

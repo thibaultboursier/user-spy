@@ -18,8 +18,10 @@
   },
   "homepage": "https://github.com/thibaultboursier/user-spy#readme",
   "dependencies": {
-    "angular": "^1.6.6",
+    "@uirouter/angularjs": "^1.0.5",
+    "angular": "^1.6.0",
     "angular-sanitize": "^1.6.6",
+    "angular-ui-router": "^0.4.3",
     "blipp": "^2.3.0",
     "glue": "^4.2.0",
     "inert": "^4.2.1",
