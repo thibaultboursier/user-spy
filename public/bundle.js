@@ -50707,9 +50707,25 @@ module.exports = angular
 const clients = {
     bindings: {},
     controllerAs: 'vm',
-    template: `clients`,
-    controller: function () {
-    }
+    template: `
+    <h2>Connected clients :</h2>
+    <ul>
+        <li ng-repeat="client in clients">{{ client }}</li>
+    </ul>
+    `,
+    controller: ['websockets', function (ws) {
+        let vm = this;
+
+        vm.clients = [];
+
+        ws.connect(function (err) {
+            ws.subscribe('/clients/updates', handler, function (err) { });
+
+            function handler(item) {
+                console.log('client updates :', item);
+            }
+        });
+    }]
 }
 
 module.exports = clients;
@@ -50802,6 +50818,7 @@ const config = require('./app.config.js');
 const home = require('./home');
 const admin = require('./admin');
 const user = require('./user');
+const shared = require('./shared');
 
 angular
     .module('spy', [
@@ -50809,13 +50826,11 @@ angular
         uiRouter,
         'home',
         'user',
-        'admin'
+        'admin',
+        'shared'
     ])
-    .config(config)
-    .filter('trustAsHtml', function ($sce) {
-        return $sce.trustAsHtml;
-    });
-},{"./admin":98,"./app.config.js":99,"./home":103,"./user":104,"@uirouter/angularjs":4,"angular":91,"angular-sanitize":88}],101:[function(require,module,exports){
+    .config(config);
+},{"./admin":98,"./app.config.js":99,"./home":103,"./shared":105,"./user":108,"@uirouter/angularjs":4,"angular":91,"angular-sanitize":88}],101:[function(require,module,exports){
 module.exports = config;
 
 config.$inject = ['$stateProvider', '$urlRouterProvider'];
@@ -50849,10 +50864,41 @@ const component = require('./home.module');
 
 module.exports = component;
 },{"./home.module":102}],104:[function(require,module,exports){
+module.exports = trustAsHtml;
+
+trustAsHtml.$inject = ['$sce'];
+
+function trustAsHtml($sce) {
+    return $sce.trustAsHtml;
+}
+},{}],105:[function(require,module,exports){
+const component = require('./shared.module');
+
+module.exports = component;
+},{"./shared.module":107}],106:[function(require,module,exports){
+const Nes = require('nes');
+
+websockets.$inject = [];
+
+function websockets() {
+    return new Nes.Client('ws://localhost:3000');
+}
+
+module.exports = websockets;
+},{"nes":92}],107:[function(require,module,exports){
+const angular = require('angular');
+const websockets = require('./services/websockets.service');
+const trustAsHtml = require('./filters/trust-as-html.filter');
+
+module.exports = angular
+    .module('shared', [])
+    .service('websockets', websockets)
+    .filter('trustAsHtml', trustAsHtml);    
+},{"./filters/trust-as-html.filter":104,"./services/websockets.service":106,"angular":91}],108:[function(require,module,exports){
 const component = require('./user.module');
 
 module.exports = component;
-},{"./user.module":107}],105:[function(require,module,exports){
+},{"./user.module":111}],109:[function(require,module,exports){
 const register = {
     template: `
     <board news="vm.news" on-history-watch="vm.onHistoryWatch()"></board>
@@ -50895,7 +50941,7 @@ const register = {
 }
 
 module.exports = register;
-},{}],106:[function(require,module,exports){
+},{}],110:[function(require,module,exports){
 module.exports = config;
 
 config.$inject = ['$stateProvider', '$urlRouterProvider'];
@@ -50907,7 +50953,7 @@ function config($stateProvider, $urlRouterProvider) {
             template: '<register></register>'
         })
 }
-},{}],107:[function(require,module,exports){
+},{}],111:[function(require,module,exports){
 const angular = require('angular');
 const config = require('./user.config');
 const register = require('./register/register.component');
@@ -50916,7 +50962,7 @@ module.exports = angular
     .module('user', [])
     .config(config)
     .component('register', register);
-},{"./register/register.component":105,"./user.config":106,"angular":91}],108:[function(require,module,exports){
+},{"./register/register.component":109,"./user.config":110,"angular":91}],112:[function(require,module,exports){
 'use strict';
 
 const Nes = require('nes');
@@ -50924,15 +50970,5 @@ const angular = require('angular');
 const angularSanitize = require('angular-sanitize');
 const uiRouter = require('angular-ui-router');
 
-const client = new Nes.Client('ws://localhost:3000');
-
-client.connect(err => {
-    if (err) throw err;
-    
-    client.request('hello', (err, payload) => {
-        console.log(payload);
-    })
-})
-
 const app = require('./app/app.module');
-},{"./app/app.module":100,"angular":91,"angular-sanitize":88,"angular-ui-router":89,"nes":92}]},{},[108]);
+},{"./app/app.module":100,"angular":91,"angular-sanitize":88,"angular-ui-router":89,"nes":92}]},{},[112]);

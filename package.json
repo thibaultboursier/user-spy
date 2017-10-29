@@ -25,7 +25,8 @@
     "blipp": "^2.3.0",
     "glue": "^4.2.0",
     "inert": "^4.2.1",
-    "nes": "^6.4.3"
+    "nes": "^6.4.3",
+    "rethinkdb": "^2.3.3"
   },
   "devDependencies": {
     "browserify": "^14.5.0",
