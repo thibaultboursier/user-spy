@@ -1,0 +1,52 @@
+2017-10-29T02:21:26.381530600 0.079359s notice: Recursively removing directory /home/thibaultboursier/Documents/dev/github/user-spy/rethinkdb_data/tmp
+2017-10-29T02:21:26.406866413 0.104694s notice: Initializing directory /home/thibaultboursier/Documents/dev/github/user-spy/rethinkdb_data
+2017-10-29T02:21:26.406960750 0.104788s info: Creating a default database for your convenience. (This is because you ran 'rethinkdb' without 'create', 'serve', or '--join', and the directory '/home/thibaultboursier/Documents/dev/github/user-spy/rethinkdb_data' did not already exist or is empty.)
+2017-10-29T02:21:26.407012643 0.104840s notice: Running rethinkdb 2.3.6~0xenial (GCC 5.3.1)...
+2017-10-29T02:21:26.410915709 0.108746s notice: Running on Linux 4.10.0-37-generic x86_64
+2017-10-29T02:21:26.410990081 0.108817s notice: Loading data from directory /home/thibaultboursier/Documents/dev/github/user-spy/rethinkdb_data
+2017-10-29T02:21:26.699427532 0.397255s info: Automatically using cache size of 1402 MB
+2017-10-29T02:21:26.700505160 0.398333s notice: Listening for intracluster connections on port 29015
+2017-10-29T02:21:26.701937288 0.399765s notice: Listening for client driver connections on port 28015
+2017-10-29T02:21:26.702128147 0.399955s notice: Listening for administrative HTTP connections on port 8080
+2017-10-29T02:21:26.702131627 0.399959s notice: Listening on cluster addresses: 127.0.0.1, 127.0.1.1, ::1
+2017-10-29T02:21:26.702136132 0.399963s notice: Listening on driver addresses: 127.0.0.1, 127.0.1.1, ::1
+2017-10-29T02:21:26.702139254 0.399966s notice: Listening on http addresses: 127.0.0.1, 127.0.1.1, ::1
+2017-10-29T02:21:26.702143381 0.399970s notice: To fully expose RethinkDB on the network, bind to all addresses by running rethinkdb with the `--bind all` command line option.
+2017-10-29T02:21:26.702147598 0.399975s notice: Server ready, "thibaultboursier_X550JK_sjy" e67141a5-88a3-455c-9eac-1c55e7cfa8a7
+2017-10-29T02:21:36.636299516 10.334127s info: Table 1ebf192f-2a58-4662-a9b0-ac909285ce18: Starting a new Raft election for term 1.
+2017-10-29T02:21:36.636753321 10.334581s info: Table 1ebf192f-2a58-4662-a9b0-ac909285ce18: Added replica on this server.
+2017-10-29T02:21:36.679030587 10.376858s info: Table 1ebf192f-2a58-4662-a9b0-ac909285ce18: This server is Raft leader for term 1. Latest log index is 0.
+2017-10-29T03:17:42.242193850 3375.940021s info: Table 16192404-ffd0-46f6-befc-fd94f20de83e: Starting a new Raft election for term 1.
+2017-10-29T03:17:42.242421904 3375.940249s info: Table 16192404-ffd0-46f6-befc-fd94f20de83e: Added replica on this server.
+2017-10-29T03:17:42.301926045 3375.999753s info: Table 16192404-ffd0-46f6-befc-fd94f20de83e: This server is Raft leader for term 1. Latest log index is 0.
+2017-10-29T03:18:01.820930391 3395.518758s info: Table a10596c5-cd90-405d-8582-3bfd247fb716: Added replica on this server.
+2017-10-29T03:18:01.820941917 3395.518769s info: Table a10596c5-cd90-405d-8582-3bfd247fb716: Starting a new Raft election for term 1.
+2017-10-29T03:18:01.891940791 3395.589768s info: Table a10596c5-cd90-405d-8582-3bfd247fb716: This server is Raft leader for term 1. Latest log index is 0.
+2017-10-29T03:18:05.350771694 3399.048599s info: Table 4863faf8-7146-45fd-b2b7-e201cacdef70: Starting a new Raft election for term 1.
+2017-10-29T03:18:05.351000766 3399.048828s info: Table 4863faf8-7146-45fd-b2b7-e201cacdef70: Added replica on this server.
+2017-10-29T03:18:05.403445078 3399.101273s info: Table 4863faf8-7146-45fd-b2b7-e201cacdef70: This server is Raft leader for term 1. Latest log index is 0.
+2017-10-29T12:46:45.120085837 0.412781s notice: Running rethinkdb 2.3.6~0xenial (GCC 5.3.1)...
+2017-10-29T12:46:45.132297179 0.424995s notice: Running on Linux 4.10.0-37-generic x86_64
+2017-10-29T12:46:45.132360203 0.425055s notice: Loading data from directory /home/thibaultboursier/Documents/dev/github/user-spy/rethinkdb_data
+2017-10-29T12:46:45.364421507 0.657117s info: Automatically using cache size of 1507 MB
+2017-10-29T12:46:45.385944701 0.678640s notice: Listening for intracluster connections on port 29015
+2017-10-29T12:46:45.798639612 1.091335s notice: Listening for client driver connections on port 28015
+2017-10-29T12:46:45.799011634 1.091707s notice: Listening for administrative HTTP connections on port 8080
+2017-10-29T12:46:45.799017005 1.091712s notice: Listening on cluster addresses: 127.0.0.1, 127.0.1.1, ::1
+2017-10-29T12:46:45.799021605 1.091717s notice: Listening on driver addresses: 127.0.0.1, 127.0.1.1, ::1
+2017-10-29T12:46:45.799026457 1.091722s notice: Listening on http addresses: 127.0.0.1, 127.0.1.1, ::1
+2017-10-29T12:46:45.799031017 1.091726s notice: To fully expose RethinkDB on the network, bind to all addresses by running rethinkdb with the `--bind all` command line option.
+2017-10-29T12:46:45.799036356 1.091732s notice: Server ready, "thibaultboursier_X550JK_sjy" e67141a5-88a3-455c-9eac-1c55e7cfa8a7
+2017-10-29T12:46:46.786743406 2.079439s info: Table 16192404-ffd0-46f6-befc-fd94f20de83e: Starting a new Raft election for term 2.
+2017-10-29T12:46:46.852900485 2.145596s info: Table 16192404-ffd0-46f6-befc-fd94f20de83e: This server is Raft leader for term 2. Latest log index is 3.
+2017-10-29T12:46:46.865461332 2.158157s info: Table 1ebf192f-2a58-4662-a9b0-ac909285ce18: Starting a new Raft election for term 2.
+2017-10-29T12:46:46.990138323 2.282834s info: Table 1ebf192f-2a58-4662-a9b0-ac909285ce18: This server is Raft leader for term 2. Latest log index is 3.
+2017-10-29T12:46:47.310002441 2.602698s info: Table a10596c5-cd90-405d-8582-3bfd247fb716: Starting a new Raft election for term 2.
+2017-10-29T12:46:47.576393208 2.869089s info: Table 4863faf8-7146-45fd-b2b7-e201cacdef70: Starting a new Raft election for term 2.
+2017-10-29T12:46:47.584088978 2.876784s info: Table a10596c5-cd90-405d-8582-3bfd247fb716: This server is Raft leader for term 2. Latest log index is 3.
+2017-10-29T12:46:47.674058521 2.966754s info: Table 4863faf8-7146-45fd-b2b7-e201cacdef70: This server is Raft leader for term 2. Latest log index is 3.
+2017-10-29T12:57:22.272447612 637.565144s notice: Server got SIGINT from pid 0, uid 0; shutting down...
+2017-10-29T12:57:22.272861890 637.565558s notice: Shutting down client connections...
+2017-10-29T12:57:22.273065973 637.565762s notice: All client connections closed.
+2017-10-29T12:57:22.273159086 637.565855s notice: Shutting down storage engine... (This may take a while if you had a lot of unflushed data in the writeback cache.)
+2017-10-29T12:57:22.312909881 637.605605s notice: Storage engine shut down.

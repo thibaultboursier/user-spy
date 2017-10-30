@@ -12,8 +12,6 @@ Glue.compose(manifest, options)
             if (err) throw err;
             
             console.log('Application is running.');
-            
-            server.subscription('/clients/updates');
             server.methods.db.setupChangefeedPush();
         })
     });

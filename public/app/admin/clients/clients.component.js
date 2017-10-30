@@ -4,21 +4,44 @@ const clients = {
     template: `
     <h2>Connected clients :</h2>
     <ul>
-        <li ng-repeat="client in clients">{{ client }}</li>
+        <li ng-repeat="client in vm.clients">{{ client.id }}</li>
     </ul>
     `,
-    controller: ['websockets', function (ws) {
+    controller: ['$scope', 'websockets', 'clientsService', function ($scope, ws, clientsService) {
         let vm = this;
 
+        vm.$onInit = onInit;
+        vm.loadAll = loadAll;
+        vm.subscribeToClientsUpdate = subscribeToClientsUpdate;
         vm.clients = [];
 
-        ws.connect(function (err) {
-            ws.subscribe('/clients/updates', handler, function (err) { });
+        function onInit() {
+            vm.loadAll()
+                .then(vm.subscribeToClientsUpdate);
+        }
 
-            function handler(item) {
-                console.log('client updates :', item);
-            }
-        });
+        function loadAll() {
+            return clientsService
+                .loadAll()
+                .then(clients => {
+                    $scope.$applyAsync(() => {
+                        vm.clients = clients;
+                    });
+                });
+        }
+
+        function subscribeToClientsUpdate() {
+            ws.connect(function (err) {
+                ws.subscribe('/clients/updates', handler, function (err) { });
+
+                function handler(item) {
+                    console.log('client updates :', item);
+                    $scope.$applyAsync(() => {
+                        vm.clients.push(item);
+                    });
+                }
+            });
+        }
     }]
 }
 

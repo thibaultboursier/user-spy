@@ -50696,40 +50696,88 @@ const config = require('./admin.config');
 const history = require('./history/history.component');
 const clients = require('./clients/clients.component');
 const cursor = require('./history/cursor.directive');
+const clientsService = require('./clients/clients.service');
 
 module.exports = angular
     .module('admin', [])
     .config(config)
     .component('history', history)
     .component('clients', clients)    
-    .directive('cursor', cursor);
-},{"./admin.config":93,"./clients/clients.component":95,"./history/cursor.directive":96,"./history/history.component":97,"angular":91}],95:[function(require,module,exports){
+    .directive('cursor', cursor)
+    .factory('clientsService', clientsService);
+},{"./admin.config":93,"./clients/clients.component":95,"./clients/clients.service":96,"./history/cursor.directive":97,"./history/history.component":98,"angular":91}],95:[function(require,module,exports){
 const clients = {
     bindings: {},
     controllerAs: 'vm',
     template: `
     <h2>Connected clients :</h2>
     <ul>
-        <li ng-repeat="client in clients">{{ client }}</li>
+        <li ng-repeat="client in vm.clients">{{ client.id }}</li>
     </ul>
     `,
-    controller: ['websockets', function (ws) {
+    controller: ['$scope', 'websockets', 'clientsService', function ($scope, ws, clientsService) {
         let vm = this;
 
+        vm.$onInit = onInit;
+        vm.loadAll = loadAll;
+        vm.subscribeToClientsUpdate = subscribeToClientsUpdate;
         vm.clients = [];
 
-        ws.connect(function (err) {
-            ws.subscribe('/clients/updates', handler, function (err) { });
+        function onInit() {
+            vm.loadAll()
+                .then(vm.subscribeToClientsUpdate);
+        }
 
-            function handler(item) {
-                console.log('client updates :', item);
-            }
-        });
+        function loadAll() {
+            return clientsService
+                .loadAll()
+                .then(clients => {
+                    $scope.$applyAsync(() => {
+                        vm.clients = clients;
+                    });
+                });
+        }
+
+        function subscribeToClientsUpdate() {
+            ws.connect(function (err) {
+                ws.subscribe('/clients/updates', handler, function (err) { });
+
+                function handler(item) {
+                    console.log('client updates :', item);
+                    $scope.$applyAsync(() => {
+                        vm.clients.push(item);
+                    });
+                }
+            });
+        }
     }]
 }
 
 module.exports = clients;
 },{}],96:[function(require,module,exports){
+clientsService.$inject = ['websockets'];
+
+function clientsService(ws) {
+
+    function loadAll() {
+        return new Promise((resolve, reject) => {
+            ws.connect(err => {
+                ws.request('/clients', (err, payload) => {
+                    if (err) reject(err);
+
+                    return resolve(payload);
+                });
+            });
+        })
+    }
+
+    return {
+        loadAll
+    }
+}
+
+module.exports = clientsService;
+},{}],97:[function(require,module,exports){
 'use strict';
 
 module.exports = cursor;
@@ -50749,7 +50797,7 @@ function cursor() {
         }
     }
 }
-},{}],97:[function(require,module,exports){
+},{}],98:[function(require,module,exports){
 const history = {
     bindings: {
         queue: '<',
@@ -50798,11 +50846,11 @@ const history = {
 module.exports = history;
 
 
-},{}],98:[function(require,module,exports){
+},{}],99:[function(require,module,exports){
 const component = require('./admin.module');
 
 module.exports = component;
-},{"./admin.module":94}],99:[function(require,module,exports){
+},{"./admin.module":94}],100:[function(require,module,exports){
 module.exports = config;
 
 config.$inject = ['$stateProvider', '$urlRouterProvider'];
@@ -50810,7 +50858,7 @@ config.$inject = ['$stateProvider', '$urlRouterProvider'];
 function config($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/home');
 }
-},{}],100:[function(require,module,exports){
+},{}],101:[function(require,module,exports){
 const angular = require('angular');
 const angularSanitize = require('angular-sanitize');
 const uiRouter = require('@uirouter/angularjs').default;
@@ -50830,7 +50878,7 @@ angular
         'shared'
     ])
     .config(config);
-},{"./admin":98,"./app.config.js":99,"./home":103,"./shared":105,"./user":108,"@uirouter/angularjs":4,"angular":91,"angular-sanitize":88}],101:[function(require,module,exports){
+},{"./admin":99,"./app.config.js":100,"./home":104,"./shared":106,"./user":109,"@uirouter/angularjs":4,"angular":91,"angular-sanitize":88}],102:[function(require,module,exports){
 module.exports = config;
 
 config.$inject = ['$stateProvider', '$urlRouterProvider'];
@@ -50852,18 +50900,18 @@ function config($stateProvider, $urlRouterProvider) {
             `
         })
 }
-},{}],102:[function(require,module,exports){
+},{}],103:[function(require,module,exports){
 const angular = require('angular');
 const config = require('./home.config');
 
 module.exports = angular
     .module('home', [])
     .config(config);
-},{"./home.config":101,"angular":91}],103:[function(require,module,exports){
+},{"./home.config":102,"angular":91}],104:[function(require,module,exports){
 const component = require('./home.module');
 
 module.exports = component;
-},{"./home.module":102}],104:[function(require,module,exports){
+},{"./home.module":103}],105:[function(require,module,exports){
 module.exports = trustAsHtml;
 
 trustAsHtml.$inject = ['$sce'];
@@ -50871,11 +50919,11 @@ trustAsHtml.$inject = ['$sce'];
 function trustAsHtml($sce) {
     return $sce.trustAsHtml;
 }
-},{}],105:[function(require,module,exports){
+},{}],106:[function(require,module,exports){
 const component = require('./shared.module');
 
 module.exports = component;
-},{"./shared.module":107}],106:[function(require,module,exports){
+},{"./shared.module":108}],107:[function(require,module,exports){
 const Nes = require('nes');
 
 websockets.$inject = [];
@@ -50885,7 +50933,7 @@ function websockets() {
 }
 
 module.exports = websockets;
-},{"nes":92}],107:[function(require,module,exports){
+},{"nes":92}],108:[function(require,module,exports){
 const angular = require('angular');
 const websockets = require('./services/websockets.service');
 const trustAsHtml = require('./filters/trust-as-html.filter');
@@ -50894,19 +50942,54 @@ module.exports = angular
     .module('shared', [])
     .service('websockets', websockets)
     .filter('trustAsHtml', trustAsHtml);    
-},{"./filters/trust-as-html.filter":104,"./services/websockets.service":106,"angular":91}],108:[function(require,module,exports){
-const component = require('./user.module');
+},{"./filters/trust-as-html.filter":105,"./services/websockets.service":107,"angular":91}],109:[function(require,module,exports){
+const user = require('./user.module');
 
-module.exports = component;
-},{"./user.module":111}],109:[function(require,module,exports){
+module.exports = user;
+},{"./user.module":112}],110:[function(require,module,exports){
 const register = {
     template: `
     <board news="vm.news" on-history-watch="vm.onHistoryWatch()"></board>
     <history queue="vm.queue" on-watch-end="vm.onWatchEnd()"></history>
     `,
     controllerAs: 'vm',
-    controller: ['$window', '$timeout', '$scope', function ($window, $timeout, $scope) {
+    controller: ['$window', '$timeout', '$scope', 'websockets', function ($window, $timeout, $scope, ws) {
         let vm = this;
+        let id;
+
+        vm.$onInit = onInit;
+
+        function onInit(){
+            ws.connect(function (err) {
+                const request = {
+                    path: '/clients',
+                    method: 'POST',
+                    payload: {}
+                };
+                ws.request(request, function (err, result) {
+                    if (err) throw err;
+                    id = result.id;
+                    console.log('payload', payload);
+                });
+            });
+        }
+
+        function addPosition(position) {
+            return new Promise((resolve, reject) => {
+                ws.connect(err => {
+                    const request = {
+                        path: '/clients',
+                        method: 'PUT',
+                        payload: {id, position}
+                    };
+                    ws.request(request, function (err, payload) {
+                        if (err) throw err;
+        
+                        console.log('payload', payload);
+                    });
+                });
+            })
+        }
 
         vm.queue = [];
         vm.news = [];
@@ -50917,6 +51000,7 @@ const register = {
         register();
 
         function register() {
+            console.log('register')
             $window.addEventListener('mousemove', onMouseMove);
 
             $timeout(() => {
@@ -50927,7 +51011,10 @@ const register = {
         }
 
         function onMouseMove({ clientX: x, clientY: y }) {
-            vm.queue.push({ x, y, time: Date.now() });
+            console.log('move')
+            addPosition({ x, y, time: Date.now() });
+            console.log('position added')
+            //vm.queue.push({ x, y, time: Date.now() });
         }
 
         function onHistoryWatch() {
@@ -50941,7 +51028,7 @@ const register = {
 }
 
 module.exports = register;
-},{}],110:[function(require,module,exports){
+},{}],111:[function(require,module,exports){
 module.exports = config;
 
 config.$inject = ['$stateProvider', '$urlRouterProvider'];
@@ -50953,7 +51040,7 @@ function config($stateProvider, $urlRouterProvider) {
             template: '<register></register>'
         })
 }
-},{}],111:[function(require,module,exports){
+},{}],112:[function(require,module,exports){
 const angular = require('angular');
 const config = require('./user.config');
 const register = require('./register/register.component');
@@ -50962,7 +51049,7 @@ module.exports = angular
     .module('user', [])
     .config(config)
     .component('register', register);
-},{"./register/register.component":109,"./user.config":110,"angular":91}],112:[function(require,module,exports){
+},{"./register/register.component":110,"./user.config":111,"angular":91}],113:[function(require,module,exports){
 'use strict';
 
 const Nes = require('nes');
@@ -50971,4 +51058,4 @@ const angularSanitize = require('angular-sanitize');
 const uiRouter = require('angular-ui-router');
 
 const app = require('./app/app.module');
-},{"./app/app.module":100,"angular":91,"angular-sanitize":88,"angular-ui-router":89,"nes":92}]},{},[112]);
+},{"./app/app.module":101,"angular":91,"angular-sanitize":88,"angular-ui-router":89,"nes":92}]},{},[113]);

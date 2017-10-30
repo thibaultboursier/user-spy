@@ -4,8 +4,43 @@ const register = {
     <history queue="vm.queue" on-watch-end="vm.onWatchEnd()"></history>
     `,
     controllerAs: 'vm',
-    controller: ['$window', '$timeout', '$scope', function ($window, $timeout, $scope) {
+    controller: ['$window', '$timeout', '$scope', 'websockets', function ($window, $timeout, $scope, ws) {
         let vm = this;
+        let id;
+
+        vm.$onInit = onInit;
+
+        function onInit(){
+            ws.connect(function (err) {
+                const request = {
+                    path: '/clients',
+                    method: 'POST',
+                    payload: {}
+                };
+                ws.request(request, function (err, result) {
+                    if (err) throw err;
+                    id = result.id;
+                    console.log('payload', payload);
+                });
+            });
+        }
+
+        function addPosition(position) {
+            return new Promise((resolve, reject) => {
+                ws.connect(err => {
+                    const request = {
+                        path: '/clients',
+                        method: 'PUT',
+                        payload: {id, position}
+                    };
+                    ws.request(request, function (err, payload) {
+                        if (err) throw err;
+        
+                        console.log('payload', payload);
+                    });
+                });
+            })
+        }
 
         vm.queue = [];
         vm.news = [];
@@ -16,6 +51,7 @@ const register = {
         register();
 
         function register() {
+            console.log('register')
             $window.addEventListener('mousemove', onMouseMove);
 
             $timeout(() => {
@@ -26,7 +62,10 @@ const register = {
         }
 
         function onMouseMove({ clientX: x, clientY: y }) {
-            vm.queue.push({ x, y, time: Date.now() });
+            console.log('move')
+            addPosition({ x, y, time: Date.now() });
+            console.log('position added')
+            //vm.queue.push({ x, y, time: Date.now() });
         }
 
         function onHistoryWatch() {
