@@ -1,0 +1,5 @@
+<h2>Connected clients</h2>
+<ul ng-if="vm.clients.length">
+    <li ng-repeat="client in vm.clients">{{ client.id }}</li>
+</ul>
+<p ng-if="!vm.clients.length">No clients.</p>

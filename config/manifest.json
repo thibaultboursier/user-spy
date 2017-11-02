@@ -26,13 +26,13 @@
         },
         {
             "plugin": {
-                "register": "./routes",
+                "register": "./db",
                 "options": {}
             }
         },
         {
             "plugin": {
-                "register": "./db",
+                "register": "./user",
                 "options": {}
             }
         }

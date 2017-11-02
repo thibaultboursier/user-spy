@@ -50709,23 +50709,24 @@ module.exports = angular
 const clients = {
     bindings: {},
     controllerAs: 'vm',
-    template: `
-    <h2>Connected clients :</h2>
-    <ul>
-        <li ng-repeat="client in vm.clients">{{ client.id }}</li>
-    </ul>
-    `,
+    templateUrl: './app/admin/clients/clients.template.html',
     controller: ['$scope', 'websockets', 'clientsService', function ($scope, ws, clientsService) {
         let vm = this;
 
         vm.$onInit = onInit;
         vm.loadAll = loadAll;
-        vm.subscribeToClientsUpdate = subscribeToClientsUpdate;
         vm.clients = [];
 
         function onInit() {
             vm.loadAll()
-                .then(vm.subscribeToClientsUpdate);
+                .then(() => {
+                    clientsService.subscribeToClientsUpdate(onListUpdate)
+                });
+        }
+
+        function onListUpdate(changes) {
+            clientsService.update(vm.clients, changes);
+            $scope.$apply();
         }
 
         function loadAll() {
@@ -50736,19 +50737,6 @@ const clients = {
                         vm.clients = clients;
                     });
                 });
-        }
-
-        function subscribeToClientsUpdate() {
-            ws.connect(function (err) {
-                ws.subscribe('/clients/updates', handler, function (err) { });
-
-                function handler(item) {
-                    console.log('client updates :', item);
-                    $scope.$applyAsync(() => {
-                        vm.clients.push(item);
-                    });
-                }
-            });
         }
     }]
 }
@@ -50771,8 +50759,45 @@ function clientsService(ws) {
         })
     }
 
+    function subscribeToClientsUpdate(cb) {
+        ws.connect(function (err) {
+            ws.subscribe('/clients/updates', handler, function (err) { });
+
+            function handler(result) {
+                cb(result);
+            }
+        });
+    }
+
+    function update(model, { old_val, new_val }) {
+        if (!old_val && new_val) {
+            model.push(new_val);
+        }
+
+        if (old_val && !new_val) {
+            let itemToDelete = model.find(item => {
+                return item.id === old_val.id;
+            });
+
+            if (itemToDelete) {
+                index = model.indexOf(itemToDelete);
+                model.splice(index, 1);
+            }
+        }
+
+        if (old_val && new_val) {
+            let itemToUpdate = model.find(item => {
+                item.id === old_val.id;
+            });
+
+            if (itemToUpdate) itemToUpdate = new_val;
+        }
+    }
+
     return {
-        loadAll
+        loadAll,
+        subscribeToClientsUpdate,
+        update
     }
 }
 

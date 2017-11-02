@@ -23,7 +23,7 @@ exports.register = function (server, options, next) {
     server.method('db.setupChangefeedPush', () => {
         r.db(db).table(entriesTable).changes().run(conn, (err, cursor) => {
             cursor.each((err, item) => {
-                server.publish('/clients/updates', item.new_val);
+                server.publish('/clients/updates', item);
             });
         });
     }, { callback: false });
@@ -35,7 +35,7 @@ exports.register = function (server, options, next) {
     });
 
     server.method('db.updateEntry', (id, position, callback) => {
-        r.db(db).table(entriesTable).get(id).run(conn, function(err, entry){
+        r.db(db).table(entriesTable).get(id).run(conn, function (err, entry) {
             console.log(entry);
             console.log(position)
             entry.position.push(position);
@@ -51,8 +51,6 @@ exports.register = function (server, options, next) {
 };
 
 exports.register.attributes = {
-    pkg: {
-        name: 'db',
-        version: '1.0.0'
-    }
+    name: 'db',
+    version: '1.0.0'
 }

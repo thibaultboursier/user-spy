@@ -1,6 +1,4 @@
-const Nes = require('nes/client');
-
-exports.register = function (server, options, next) {
+module.exports = function(server, options, next){
     server.route({
         method: 'GET',
         path: '/{param*}',
@@ -71,11 +69,6 @@ exports.register = function (server, options, next) {
             }
         }
     });
-    next();
-};
 
-exports.register.attributes = {
-    pkg: {
-        name: 'routes'
-    }
+    next();
 }

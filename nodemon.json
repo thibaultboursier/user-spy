@@ -1,3 +1,11 @@
 {
-    "verbose": false
+    "verbose": false,
+    "ignore": [
+        ".git",
+        "node_modules/**/*",
+        "public/bundle.js"
+    ],
+    "events": {
+        "restart": "browserify ./public/main.js > ./public/bundle.js"
+    }
 }
