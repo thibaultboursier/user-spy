@@ -1,3 +1,5 @@
+'use strict';
+
 const angular = require('angular');
 const config = require('./admin.config');
 const history = require('./history/history.component');

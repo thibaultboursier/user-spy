@@ -51,6 +51,6 @@ exports.register = function (server, options, next) {
 };
 
 exports.register.attributes = {
-    name: 'db',
+    name: 'database',
     version: '1.0.0'
 }

@@ -1,3 +1,5 @@
+'use strict';
+
 const register = {
     template: `
     <board news="vm.news" on-history-watch="vm.onHistoryWatch()"></board>
@@ -20,7 +22,6 @@ const register = {
                 ws.request(request, function (err, result) {
                     if (err) throw err;
                     id = result.id;
-                    console.log('payload', payload);
                 });
             });
         }
@@ -35,8 +36,6 @@ const register = {
                     };
                     ws.request(request, function (err, payload) {
                         if (err) throw err;
-        
-                        console.log('payload', payload);
                     });
                 });
             })
@@ -51,7 +50,6 @@ const register = {
         register();
 
         function register() {
-            console.log('register')
             $window.addEventListener('mousemove', onMouseMove);
 
             $timeout(() => {
@@ -62,7 +60,6 @@ const register = {
         }
 
         function onMouseMove({ clientX: x, clientY: y }) {
-            console.log('move')
             addPosition({ x, y, time: Date.now() });
             console.log('position added')
             //vm.queue.push({ x, y, time: Date.now() });

@@ -1,3 +1,5 @@
+'use strict';
+
 clientsService.$inject = ['websockets'];
 
 function clientsService(ws) {
@@ -30,12 +32,12 @@ function clientsService(ws) {
         }
 
         if (old_val && !new_val) {
-            let itemToDelete = model.find(item => {
+            const itemToDelete = model.find(item => {
                 return item.id === old_val.id;
             });
 
             if (itemToDelete) {
-                index = model.indexOf(itemToDelete);
+                const index = model.indexOf(itemToDelete);
                 model.splice(index, 1);
             }
         }
