@@ -1,9 +1,13 @@
 'use strict';
 
 const Joi = require('joi');
-const client = require('./handlers/client');
+const clientHandler = require('./handlers/client');
 
 module.exports = function (server, options, next) {
+    const { client } = server.entities;
+
+    server.entities.client.watch();
+
     server.route({
         method: 'GET',
         path: '/{param*}',
@@ -21,7 +25,7 @@ module.exports = function (server, options, next) {
         path: '/clients',
         config: {
             id: 'get-all-clients',
-            handler: client.getAll
+            handler: clientHandler.getAll
         }
     });
 
@@ -30,14 +34,14 @@ module.exports = function (server, options, next) {
         path: '/clients',
         config: {
             id: 'update-client-position',
-            handler: client.updatePosition,
+            handler: clientHandler.updatePosition,
             validate: {
                 payload: {
-                    id: Joi.string(),
-                    position: Joi.object().keys({
-                        x: Joi.number(),
-                        y: Joi.number(),
-                        time: Joi.number()
+                    id: Joi.string().required(),
+                    position: Joi.object().required().keys({
+                        x: Joi.number().required(),
+                        y: Joi.number().required(),
+                        time: Joi.number().required()
                     })
                 }
             }
@@ -48,10 +52,12 @@ module.exports = function (server, options, next) {
         method: 'POST',
         path: '/clients',
         config: {
-            id: 'add-client',
-            handler: client.add
+            id: 'register-client',
+            handler: clientHandler.register
         }
     });
+
+    server.subscription('/clients/updates');
 
     next();
 }

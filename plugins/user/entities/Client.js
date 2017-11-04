@@ -1,8 +1,39 @@
 'use strict';
 
+const r = require('rethinkdb');
+
 class Client {
-    constructor(server) {
-        this.server = server;
+    constructor(opts) {
+        this.opts = opts;
+        this.name = 'client';
+        this.table = 'clients';
+    }
+
+    /**
+     * Factory to construct new Client.
+     * @param {Object} opts
+     */
+    static factory(opts) {
+        return new Client(opts);
+    }
+
+    /**
+     * Watch client updates.
+     * @returns {undefined}
+     */
+    watch() {
+        r.db(this.opts.db)
+            .table(this.table)
+            .changes()
+            .run(this.opts.conn, (err, cursor) => {
+                cursor.each((err, item) => {
+                    this.opts.server.publish('/clients/updates', item);
+                });
+        });
+    }
+
+    getOnlineClients() {
+        console.log(this.server.plugins.database)
     }
 
     getAll() {
@@ -17,8 +48,4 @@ class Client {
     }
 }
 
-module.export = function (server) {
-    const client = new Client(server);
-
-    return client;
-}
+module.exports = Client;

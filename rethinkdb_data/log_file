@@ -50,3 +50,33 @@
 2017-10-29T12:57:22.273065973 637.565762s notice: All client connections closed.
 2017-10-29T12:57:22.273159086 637.565855s notice: Shutting down storage engine... (This may take a while if you had a lot of unflushed data in the writeback cache.)
 2017-10-29T12:57:22.312909881 637.605605s notice: Storage engine shut down.
+2017-11-04T18:57:57.793100880 0.444130s notice: Running rethinkdb 2.3.6~0xenial (GCC 5.3.1)...
+2017-11-04T18:57:57.817494677 0.468527s notice: Running on Linux 4.10.0-37-generic x86_64
+2017-11-04T18:57:57.817588068 0.468617s notice: Loading data from directory /home/thibaultboursier/Documents/dev/github/user-spy/rethinkdb_data
+2017-11-04T18:57:58.000857990 0.651887s info: Automatically using cache size of 910 MB
+2017-11-04T18:57:58.002259779 0.653289s notice: Listening for intracluster connections on port 29015
+2017-11-04T18:57:58.375835308 1.026864s notice: Listening for client driver connections on port 28015
+2017-11-04T18:57:58.376247887 1.027277s notice: Listening for administrative HTTP connections on port 8080
+2017-11-04T18:57:58.376251931 1.027281s notice: Listening on cluster addresses: 127.0.0.1, 127.0.1.1, ::1
+2017-11-04T18:57:58.376255018 1.027284s notice: Listening on driver addresses: 127.0.0.1, 127.0.1.1, ::1
+2017-11-04T18:57:58.376276716 1.027306s notice: Listening on http addresses: 127.0.0.1, 127.0.1.1, ::1
+2017-11-04T18:57:58.376279504 1.027308s notice: To fully expose RethinkDB on the network, bind to all addresses by running rethinkdb with the `--bind all` command line option.
+2017-11-04T18:57:58.376282295 1.027311s notice: Server ready, "thibaultboursier_X550JK_sjy" e67141a5-88a3-455c-9eac-1c55e7cfa8a7
+2017-11-04T18:57:59.336810218 1.987840s info: Table 16192404-ffd0-46f6-befc-fd94f20de83e: Starting a new Raft election for term 3.
+2017-11-04T18:57:59.408484879 2.059515s info: Table 16192404-ffd0-46f6-befc-fd94f20de83e: This server is Raft leader for term 3. Latest log index is 6.
+2017-11-04T18:57:59.685176439 2.336206s info: Table 1ebf192f-2a58-4662-a9b0-ac909285ce18: Starting a new Raft election for term 3.
+2017-11-04T18:57:59.771833229 2.422862s info: Table 1ebf192f-2a58-4662-a9b0-ac909285ce18: This server is Raft leader for term 3. Latest log index is 6.
+2017-11-04T18:57:59.869312947 2.520342s info: Table a10596c5-cd90-405d-8582-3bfd247fb716: Starting a new Raft election for term 3.
+2017-11-04T18:58:00.026713458 2.677743s info: Table 4863faf8-7146-45fd-b2b7-e201cacdef70: Starting a new Raft election for term 3.
+2017-11-04T18:58:00.073777273 2.724807s info: Table a10596c5-cd90-405d-8582-3bfd247fb716: This server is Raft leader for term 3. Latest log index is 6.
+2017-11-04T18:58:00.163627097 2.814656s info: Table 4863faf8-7146-45fd-b2b7-e201cacdef70: This server is Raft leader for term 3. Latest log index is 6.
+2017-11-04T18:58:02.462265215 5.113295s warn: Received invalid clustering header from 127.0.0.1:43018, closing connection -- something might be connecting to the wrong port.
+2017-11-04T18:58:18.477212920 21.128243s warn: Received invalid clustering header from 127.0.0.1:43028, closing connection -- something might be connecting to the wrong port.
+2017-11-04T19:03:00.479477314 303.130506s info: Table 4747cf53-6fea-4743-b120-eee0d0d90bd8: Starting a new Raft election for term 1.
+2017-11-04T19:03:00.479831596 303.130861s info: Table 4747cf53-6fea-4743-b120-eee0d0d90bd8: Added replica on this server.
+2017-11-04T19:03:00.539718822 303.190748s info: Table 4747cf53-6fea-4743-b120-eee0d0d90bd8: This server is Raft leader for term 1. Latest log index is 0.
+2017-11-04T19:04:01.868682957 364.519712s notice: Removing file /home/thibaultboursier/Documents/dev/github/user-spy/rethinkdb_data/4747cf53-6fea-4743-b120-eee0d0d90bd8
+2017-11-04T19:04:01.868695775 364.519725s info: Table 4747cf53-6fea-4743-b120-eee0d0d90bd8: Deleted the table.
+2017-11-04T19:04:11.006823419 373.657853s info: Table 2078f967-8ca9-4990-9288-edf879f7ca2e: Added replica on this server.
+2017-11-04T19:04:11.006880005 373.657909s info: Table 2078f967-8ca9-4990-9288-edf879f7ca2e: Starting a new Raft election for term 1.
+2017-11-04T19:04:11.060953878 373.711984s info: Table 2078f967-8ca9-4990-9288-edf879f7ca2e: This server is Raft leader for term 1. Latest log index is 0.

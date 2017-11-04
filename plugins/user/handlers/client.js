@@ -1,25 +1,29 @@
 'use strict';
 
-const clientEntity = require('../entities/Client');
-
 module.exports = {
-    add: function ({ payload, server }, reply) {
+    setupChangefeedPush: function(){
+        console.log(server.entities.client)
+        clientEntity.watch();
+    },
+    register: function ({ payload, server }, reply) {
         server.methods.db.saveEntry(payload, (err, result) => {
             const id = result.generated_keys[0];
 
-            if (err) {
-                return reply().code(500);
-            }
+            if (err) return reply().code(500);
 
             return reply({ id }).code(200);
         });
     },
     getAll: function ({ server }, reply) {
+        console.log(server.methods.dbs);
+        server.methods.dbs.table('clients')
+            .filter({online: true})
+            .get()
+            .run()
+return;
         server.methods.db.loadEntries((err, cursor) => {
-            if (err) {
-                return reply().code(500);
-            }
-
+            if (err) return reply().code(500);
+            
             cursor.toArray((err, results) => {
                 reply(results).code(200);
             });

@@ -1,7 +1,7 @@
 'use strict';
 
 const Glue = require('glue');
-const manifest = require('./config/manifest.json');
+const manifest = require('./config/manifest.js');
 const options = {
     relativeTo: `${__dirname}/plugins`
 };
@@ -12,6 +12,5 @@ Glue.compose(manifest, options)
             if (err) throw err;
             
             console.log('Application is running.');
-            server.methods.db.setupChangefeedPush();
         })
     });

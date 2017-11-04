@@ -1,32 +1,32 @@
 'use strict';
 
+const config = require('../../config/config');
 const r = require('rethinkdb');
 
 exports.register = function (server, options, next) {
-    const db = 'user_spy';
-    const entriesTable = 'clients';
+    const { db } = config.rethinkdb;
     let conn;
 
     r.connect((err, connection) => {
         if (err) return next(err);
 
         conn = connection;
-        console.log('connection', conn)
 
         r.dbCreate(db).run(connection, (err, result) => {
-            r.db(db).tableCreate(entriesTable).run(connection, (err, result) => {
+            r.db(db).tableCreate('entries').run(connection, (err, result) => {
+
+                server.method('db.get', () => ({ db, conn }));
+
                 return next();
             });
         });
     });
 
-    server.method('db.setupChangefeedPush', () => {
-        r.db(db).table(entriesTable).changes().run(conn, (err, cursor) => {
-            cursor.each((err, item) => {
-                server.publish('/clients/updates', item);
-            });
-        });
-    }, { callback: false });
+
+
+
+    return;
+
 
     server.method('db.saveEntry', (entry, callback) => {
         entry.online = true;
@@ -46,8 +46,6 @@ exports.register = function (server, options, next) {
     server.method('db.loadEntries', (callback) => {
         r.db(db).table(entriesTable).run(conn, callback);
     });
-
-    server.subscription('/clients/updates');
 };
 
 exports.register.attributes = {
