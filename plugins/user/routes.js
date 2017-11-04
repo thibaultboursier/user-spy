@@ -4,9 +4,9 @@ const Joi = require('joi');
 const clientHandler = require('./handlers/client');
 
 module.exports = function (server, options, next) {
-    const { client } = server.entities;
+    const { client } = server.app.entities;
 
-    server.entities.client.watch();
+    client.watch();
 
     server.route({
         method: 'GET',
@@ -19,7 +19,7 @@ module.exports = function (server, options, next) {
             }
         }
     });
-
+    console.log('server entities', server.app)
     server.route({
         method: 'GET',
         path: '/clients',

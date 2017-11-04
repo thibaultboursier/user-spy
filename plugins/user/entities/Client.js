@@ -18,6 +18,28 @@ class Client {
     }
 
     /**
+     * Save new client.
+     * @param {Object} client 
+     */
+    save(client) {
+        return r.db(this.opts.db)
+            .table(this.table)
+            .insert(client)
+            .run(this.opts.conn)
+            .then(cursor => cursor.toArray());
+    }
+
+    /**
+     * Get all clients.
+     */
+    getAll() {
+        return r.db(this.opts.db)
+            .table(this.table)
+            .run(this.opts.conn)
+            .then(cursor => cursor.toArray());
+    }
+
+    /**
      * Watch client updates.
      * @returns {undefined}
      */
@@ -29,17 +51,14 @@ class Client {
                 cursor.each((err, item) => {
                     this.opts.server.publish('/clients/updates', item);
                 });
-        });
+            });
     }
 
+    /**
+     * Get only online clients.
+     * @returns {undefined}
+     */
     getOnlineClients() {
-        console.log(this.server.plugins.database)
-    }
-
-    getAll() {
-        console.log('ii')
-        return this.server.methods.db.loadEntries()
-            .then(cursor => cursor.toArray());
     }
 
     updatePosition(id, position) {

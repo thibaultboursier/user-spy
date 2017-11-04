@@ -9,11 +9,14 @@ exports.register = function (server, options, next) {
     const opts = { db, conn, server };
 
     const normalizedPath = require("path").join(__dirname, "entities");
+    let entities = {};
 
     require("fs").readdirSync(normalizedPath).forEach(function (file) {
         let entity = require("./entities/" + file).factory(opts);
-        server.entities[entity.name] = entity;
+        entities[entity.name] = entity;
     });
+
+    server.app.entities = entities;
 
     routes.apply(null, arguments);
 
