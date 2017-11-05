@@ -1,7 +1,7 @@
 'use strict';
 
 exports.register = function (server, options, next) {
-    server.expose('entitiesLoader', require('./entitiesLoader'));
+    server.expose('entitiesLoader', require('./entitiesLoader').bind(null, server));
     next();
 };
 

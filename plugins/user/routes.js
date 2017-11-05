@@ -19,7 +19,7 @@ module.exports = function (server, options, next) {
             }
         }
     });
-    console.log('server entities', server.app)
+    
     server.route({
         method: 'GET',
         path: '/clients',

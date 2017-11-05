@@ -17,7 +17,7 @@ module.exports = {
     getAll: function ({ server }, reply) {
         const { client } = server.app.entities;
 
-        client.getAll()
+        client.getOnlineClients()
             .then(results => reply(results).code(200))
             .catch(err => reply().code(500));
     },

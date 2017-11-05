@@ -59,6 +59,11 @@ class Client {
      * @returns {undefined}
      */
     getOnlineClients() {
+        return r.db(this.opts.db)
+            .table(this.table)
+            .filter({ online: true })
+            .run(this.opts.conn)
+            .then(cursor => cursor.toArray());
     }
 
     updatePosition(id, position) {
