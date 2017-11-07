@@ -17,7 +17,10 @@ const register = {
                 const request = {
                     path: '/clients',
                     method: 'POST',
-                    payload: {}
+                    payload: {
+                        socket_id: ws.id,
+                        position: []
+                    }
                 };
                 ws.request(request, function (err, result) {
                     if (err) throw err;
@@ -28,11 +31,13 @@ const register = {
 
         function addPosition(position) {
             return new Promise((resolve, reject) => {
+                const {id} = ws;
+                
                 ws.connect(err => {
                     const request = {
-                        path: '/clients',
+                        path: `/clients/${id}`,
                         method: 'PUT',
-                        payload: {id, position}
+                        payload: {position}
                     };
                     ws.request(request, function (err, payload) {
                         if (err) throw err;

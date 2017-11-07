@@ -6,7 +6,7 @@ module.exports = {
      */
     register: function ({ payload, server }, reply) {
         const { client } = server.app.entities;
-        
+
         client.save(payload)
             .then(result => reply(result).code(200))
             .catch(err => reply().code(500));
@@ -24,10 +24,12 @@ module.exports = {
     /**
      * Update client position.
      */
-    updatePosition: function ({ payload, server }, reply) {
-        const { id, position } = payload;
-
-        clientEntity
+    updatePosition: function ({ params, payload, server }, reply) {
+        const { client } = server.app.entities;
+        const { id } = params;
+        const { position } = payload;
+        
+        client
             .updatePosition(id, position)
             .then(results => reply(results).code(200))
             .catch(e => reply().code(500));

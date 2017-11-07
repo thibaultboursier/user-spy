@@ -31,13 +31,12 @@ module.exports = function (server, options, next) {
 
     server.route({
         method: 'PUT',
-        path: '/clients',
+        path: '/clients/{id}',
         config: {
             id: 'update-client-position',
             handler: clientHandler.updatePosition,
             validate: {
                 payload: {
-                    id: Joi.string().required(),
                     position: Joi.object().required().keys({
                         x: Joi.number().required(),
                         y: Joi.number().required(),

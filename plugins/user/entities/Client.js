@@ -66,9 +66,35 @@ class Client {
             .then(cursor => cursor.toArray());
     }
 
-    updatePosition(id, position) {
-        return this.server.methods.db.updateEntry(id, position)
+    /**
+     * Get client by socket id.
+     * @param {string} socketId 
+     */
+    getBySocketId(socketId) {
+        return r.db(this.opts.db)
+            .table(this.table)
+            .filter({ socket_id: socketId })
+            .run(this.opts.conn)
             .then(cursor => cursor.toArray());
+    }
+
+    /**
+     * Updqte client position.
+     * @param {string} socketId 
+     * @param {Object} position 
+     */
+    updatePosition(socketId, position) {
+        return this.getBySocketId(socketId)
+            .then(entry => {
+                entry.positions.push(position);
+
+                return r.db(this.opts.db)
+                    .table(this.table)
+                    .get(entry.id)
+                    .update(entry)
+                    .run(this.opts.conn)
+                    .then(cursor => cursor.toArray());
+            });
     }
 }
 
