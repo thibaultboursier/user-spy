@@ -1,3 +1,5 @@
+'use strict';
+
 const angular = require('angular');
 const angularSanitize = require('angular-sanitize');
 const uiRouter = require('@uirouter/angularjs').default;

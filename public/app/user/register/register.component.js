@@ -19,7 +19,7 @@ const register = {
                     method: 'POST',
                     payload: {
                         socket_id: ws.id,
-                        position: []
+                        positions: []
                     }
                 };
                 ws.request(request, function (err, result) {

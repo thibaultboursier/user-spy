@@ -91643,6 +91643,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],99:[function(require,module,exports){
+'use strict';
+
 module.exports = config;
 
 config.$inject = ['$stateProvider', '$urlRouterProvider'];
@@ -91682,6 +91684,8 @@ module.exports = angular
     .directive('cursor', cursor)
     .factory('clientsService', clientsService);
 },{"./admin.config":99,"./clients/clients.component":101,"./clients/clients.service":102,"./history/cursor.directive":103,"./history/history.component":104,"angular":97}],101:[function(require,module,exports){
+'use strict';
+
 const clients = {
     bindings: {},
     controllerAs: 'vm',
@@ -91801,6 +91805,8 @@ function cursor() {
     }
 }
 },{}],104:[function(require,module,exports){
+'use strict';
+
 const history = {
     bindings: {
         queue: '<',
@@ -91850,10 +91856,14 @@ module.exports = history;
 
 
 },{}],105:[function(require,module,exports){
+'use strict';
+
 const component = require('./admin.module');
 
 module.exports = component;
 },{"./admin.module":100}],106:[function(require,module,exports){
+'use strict';
+
 module.exports = config;
 
 config.$inject = ['$stateProvider', '$urlRouterProvider'];
@@ -91862,6 +91872,8 @@ function config($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/home');
 }
 },{}],107:[function(require,module,exports){
+'use strict';
+
 const angular = require('angular');
 const angularSanitize = require('angular-sanitize');
 const uiRouter = require('@uirouter/angularjs').default;
@@ -91882,6 +91894,8 @@ angular
     ])
     .config(config);
 },{"./admin":105,"./app.config.js":106,"./home":110,"./shared":112,"./user":115,"@uirouter/angularjs":4,"angular":97,"angular-sanitize":94}],108:[function(require,module,exports){
+'use strict';
+
 module.exports = config;
 
 config.$inject = ['$stateProvider', '$urlRouterProvider'];
@@ -91904,6 +91918,8 @@ function config($stateProvider, $urlRouterProvider) {
         })
 }
 },{}],109:[function(require,module,exports){
+'use strict';
+
 const angular = require('angular');
 const config = require('./home.config');
 
@@ -91911,10 +91927,14 @@ module.exports = angular
     .module('home', [])
     .config(config);
 },{"./home.config":108,"angular":97}],110:[function(require,module,exports){
+'use strict';
+
 const component = require('./home.module');
 
 module.exports = component;
 },{"./home.module":109}],111:[function(require,module,exports){
+'use strict';
+
 module.exports = trustAsHtml;
 
 trustAsHtml.$inject = ['$sce'];
@@ -91923,10 +91943,14 @@ function trustAsHtml($sce) {
     return $sce.trustAsHtml;
 }
 },{}],112:[function(require,module,exports){
+'use strict';
+
 const component = require('./shared.module');
 
 module.exports = component;
 },{"./shared.module":114}],113:[function(require,module,exports){
+'use strict';
+
 const Nes = require('nes');
 
 websockets.$inject = [];
@@ -91937,6 +91961,8 @@ function websockets() {
 
 module.exports = websockets;
 },{"nes":98}],114:[function(require,module,exports){
+'use strict';
+
 const angular = require('angular');
 const angularMaterial = require('angular-material');
 const websockets = require('./services/websockets.service');
@@ -91976,7 +92002,7 @@ const register = {
                     method: 'POST',
                     payload: {
                         socket_id: ws.id,
-                        position: []
+                        positions: []
                     }
                 };
                 ws.request(request, function (err, result) {

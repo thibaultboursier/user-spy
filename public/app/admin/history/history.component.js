@@ -1,3 +1,5 @@
+'use strict';
+
 const history = {
     bindings: {
         queue: '<',

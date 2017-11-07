@@ -1,3 +1,5 @@
+'use strict';
+
 const Nes = require('nes');
 
 websockets.$inject = [];

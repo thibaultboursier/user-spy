@@ -28,7 +28,7 @@ module.exports = {
         const { client } = server.app.entities;
         const { id } = params;
         const { position } = payload;
-        
+
         client
             .updatePosition(id, position)
             .then(results => reply(results).code(200))

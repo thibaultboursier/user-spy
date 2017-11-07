@@ -56,7 +56,6 @@ class Client {
 
     /**
      * Get only online clients.
-     * @returns {undefined}
      */
     getOnlineClients() {
         return r.db(this.opts.db)
@@ -67,34 +66,23 @@ class Client {
     }
 
     /**
-     * Get client by socket id.
-     * @param {string} socketId 
-     */
-    getBySocketId(socketId) {
-        return r.db(this.opts.db)
-            .table(this.table)
-            .filter({ socket_id: socketId })
-            .run(this.opts.conn)
-            .then(cursor => cursor.toArray());
-    }
-
-    /**
      * Updqte client position.
      * @param {string} socketId 
      * @param {Object} position 
      */
     updatePosition(socketId, position) {
-        return this.getBySocketId(socketId)
-            .then(entry => {
-                entry.positions.push(position);
+        console.log(socketId, position)
 
-                return r.db(this.opts.db)
-                    .table(this.table)
-                    .get(entry.id)
-                    .update(entry)
-                    .run(this.opts.conn)
-                    .then(cursor => cursor.toArray());
-            });
+        return r.db(this.opts.db)
+            .table(this.table)
+            .filter({ socket_id: socketId })
+            .update(function (client) {
+                return {
+                    positions: client('positions').append(position)
+                }
+            })
+            .run(this.opts.conn)
+            .then(cursor => cursor.toArray());
     }
 }
 

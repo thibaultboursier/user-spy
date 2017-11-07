@@ -1,3 +1,5 @@
+'use strict';
+
 const angular = require('angular');
 const angularMaterial = require('angular-material');
 const websockets = require('./services/websockets.service');

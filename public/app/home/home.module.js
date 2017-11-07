@@ -1,3 +1,5 @@
+'use strict';
+
 const angular = require('angular');
 const config = require('./home.config');
 
