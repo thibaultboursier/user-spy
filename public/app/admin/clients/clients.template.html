@@ -1,0 +1,20 @@
+<h2>Connected clients ({{vm.clients.length}})</h2>
+
+<md-content layout="row" layout-wrap>
+    <div layout="column" flex="20" ng-repeat="client in vm.clients">
+        <md-card>
+            <md-card-title>
+                <md-card-title-text>
+                    <span class="md-headline">Client {{ $index + 1 }}</span>
+                    <span class="md-subhead">{{client.id}}</span>
+                </md-card-title-text>
+            </md-card-title>
+            <md-card-actions layout="row" layout-align="end center">
+                <md-button>Action 1</md-button>
+                <md-button>Action 2</md-button>
+            </md-card-actions>
+        </md-card>
+    </div>
+</md-content>
+
+<p ng-if="!vm.clients.length">No clients.</p>

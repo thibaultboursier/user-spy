@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.5/angular-material.css">    
+    <script src="bundle.js" defer></script>
+    <style>
+        .cursor {
+            border-radius: 10px;
+            height: 10px;
+            width: 10px;
+            background-color: black;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 15999;
+        }
+    </style>
+</head>
+
+<body ng-app="spy">
+    <ui-view></ui-view>
+</body>
+
+</html>
