@@ -9,6 +9,8 @@ const clients = {
 
         vm.$onInit = onInit;
         vm.loadAll = loadAll;
+        vm.filter = filter;
+        vm.isOnline = isOnline;
         vm.clients = [];
 
         function onInit() {
@@ -19,8 +21,11 @@ const clients = {
         }
 
         function onListUpdate(changes) {
-            clientsService.update(vm.clients, changes);
-            $scope.$apply();
+            $scope.$applyAsync(() => {
+                const model = vm.clients.slice();
+                const updatedModel = clientsService.getUpdatedModel(model, changes);
+                vm.clients = updatedModel.filter(filter);
+            });
         }
 
         function loadAll() {
@@ -31,6 +36,14 @@ const clients = {
                         vm.clients = clients;
                     });
                 });
+        }
+
+        function filter(client) {
+            return isOnline(client);
+        }
+
+        function isOnline(client) {
+            return client.online === true;
         }
     }]
 }

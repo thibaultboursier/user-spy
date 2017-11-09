@@ -4,10 +4,10 @@ module.exports = {
     /**
      * Register new client.
      */
-    register: function ({ payload, server }, reply) {
+    register: function ({ payload, server, socket }, reply) {
         const { client } = server.app.entities;
 
-        client.save(payload)
+        client.save(socket.id)
             .then(result => reply(result).code(200))
             .catch(err => reply().code(500));
     },

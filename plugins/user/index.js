@@ -1,16 +1,18 @@
 'use strict';
 
 const routes = require('./routes');
-const clientEntity = require('./entities/Client');
+const events = require('./events');
 
 exports.register = function (server, options, next) {
-    const { entitiesLoader } = server.plugins.utils;
+    const { entitiesLoader } = server.plugins.utils; 
 
     entitiesLoader({
         path: __dirname
     });
 
-    routes.apply(null, arguments);
+    routes(server);
+    events(server);
+    
     next();
 }
 

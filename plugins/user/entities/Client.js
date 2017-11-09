@@ -21,7 +21,12 @@ class Client {
      * Save new client.
      * @param {Object} client 
      */
-    save(client) {
+    save(socketId) {
+        const client = {
+            online: true,
+            positions: []
+        };
+
         return r.db(this.opts.db)
             .table(this.table)
             .insert(client)
@@ -71,8 +76,6 @@ class Client {
      * @param {Object} position 
      */
     updatePosition(socketId, position) {
-        console.log(socketId, position)
-
         return r.db(this.opts.db)
             .table(this.table)
             .filter({ socket_id: socketId })
@@ -81,6 +84,15 @@ class Client {
                     positions: client('positions').append(position)
                 }
             })
+            .run(this.opts.conn)
+            .then(cursor => cursor.toArray());
+    }
+
+    setOffline() {
+        return r.db(this.opts.db)
+            .table(this.table)
+            .filter({ socket_id: socketId })
+            .update({ online: false })
             .run(this.opts.conn)
             .then(cursor => cursor.toArray());
     }

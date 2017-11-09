@@ -26,7 +26,7 @@ function clientsService(ws) {
         });
     }
 
-    function update(model, { old_val, new_val }) {
+    function getUpdatedModel(model, { old_val, new_val }) {
         if (!old_val && new_val) {
             model.push(new_val);
         }
@@ -43,18 +43,24 @@ function clientsService(ws) {
         }
 
         if (old_val && new_val) {
+            console.log(old_val, new_val)
             let itemToUpdate = model.find(item => {
-                item.id === old_val.id;
+                return item.id === old_val.id;
             });
 
-            if (itemToUpdate) itemToUpdate = new_val;
+            if (itemToUpdate) {
+                const index = model.indexOf(itemToUpdate);
+                model[index] = new_val;
+            }
         }
+
+        return model;
     }
 
     return {
         loadAll,
         subscribeToClientsUpdate,
-        update
+        getUpdatedModel
     }
 }
 

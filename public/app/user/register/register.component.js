@@ -16,11 +16,7 @@ const register = {
             ws.connect(function (err) {
                 const request = {
                     path: '/clients',
-                    method: 'POST',
-                    payload: {
-                        socket_id: ws.id,
-                        positions: []
-                    }
+                    method: 'POST'
                 };
                 ws.request(request, function (err, result) {
                     if (err) throw err;

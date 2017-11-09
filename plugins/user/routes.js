@@ -3,7 +3,7 @@
 const Joi = require('joi');
 const clientHandler = require('./handlers/client');
 
-module.exports = function (server, options, next) {
+module.exports = function (server) {
     const { client } = server.app.entities;
 
     client.watch();
@@ -57,6 +57,4 @@ module.exports = function (server, options, next) {
     });
 
     server.subscription('/clients/updates');
-
-    next();
 }
